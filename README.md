@@ -1,1 +1,733 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Epectrical — Smart Electrical, Plumbing & Civil</title>
+    <style>
+        :root {
+            --bg-1: #062a2d; /* deep teal */
+            --bg-2: #0e5f67; /* teal */
+            --accent: #00c4a7; /* mint */
+            --accent-light: #00e6c4;
+            --accent-dark: #00a38a;
+            --muted: rgba(255,255,255,0.85);
+            --card: rgba(255,255,255,0.06);
+            --glass: rgba(255,255,255,0.04);
+            --radius: 14px;
+            --max-width: 1100px;
+            font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+            color: white;
+        }
+
+        * { box-sizing: border-box; }
+
+        body, html {
+            height: 100%;
+            margin: 0;
+            background: linear-gradient(180deg, var(--bg-1), var(--bg-2));
+            -webkit-font-smoothing: antialiased;
+            scroll-behavior: smooth;
+        }
+
+        .wrap {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 28px;
+        }
+
+        /* HERO */
+        .hero {
+            position: relative;
+            height: 78vh;
+            min-height: 520px;
+            overflow: hidden;
+            border-radius: 20px;
+            background: linear-gradient(180deg, rgba(2,27,28,0.6), rgba(7,46,50,0.8));
+            backdrop-filter: blur(6px);
+            box-shadow: 0 10px 40px rgba(2,10,10,0.6);
+        }
+
+        .layer {
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+        }
+
+        /* background city silhouette layers */
+        .bg-layer {
+            background-repeat: no-repeat;
+            background-position: center bottom;
+            background-size: cover;
+            mix-blend-mode: screen;
+            filter: contrast(1.05) saturate(1.05);
+        }
+
+        .bg-1 {
+            background-image: radial-gradient(circle at 20% 10%, rgba(0,196,167,0.06), transparent 8%), linear-gradient(180deg, rgba(0,0,0,0.05), transparent 30%);
+        }
+
+        .bg-2 {
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 400"><g fill="%2300443f"><rect x="40" y="160" width="120" height="240" rx="8"/><rect x="200" y="120" width="140" height="280" rx="8"/><rect x="380" y="180" width="100" height="220" rx="8"/><rect x="520" y="100" width="180" height="300" rx="8"/><rect x="740" y="160" width="120" height="240" rx="8"/><rect x="920" y="140" width="140" height="260" rx="8"/></g></svg>');
+            opacity: 0.14;
+        }
+
+        .bg-3 {
+            background-image: linear-gradient(180deg, rgba(0,0,0,0.05), transparent);
+            opacity: 0.08;
+        }
+
+        .hero-inner {
+            position: relative;
+            z-index: 6;
+            padding: 56px 48px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .logo {
+            font-weight: 800;
+            letter-spacing: 1px;
+            font-size: 20px;
+        }
+
+        h1 {
+            font-size: 48px;
+            margin: 0;
+            line-height: 1.02;
+        }
+
+        .sub {
+            color: var(--muted);
+            font-weight: 500;
+        }
+
+        .cta {
+            display: flex;
+            gap: 16px;
+            margin-top: 6px;
+        }
+
+        .btn {
+            border-radius: 12px;
+            padding: 14px 20px;
+            background: linear-gradient(90deg, var(--accent), var(--accent-dark));
+            border: none;
+            color: #013233;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 6px 18px rgba(1,50,47,0.18);
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(1,50,47,0.25);
+        }
+
+        .btn.ghost {
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.08);
+            color: var(--muted);
+        }
+
+        .btn.ghost:hover {
+            background: rgba(255,255,255,0.05);
+        }
+
+        /* floating service cards */
+        .services-row {
+            position: relative;
+            display: flex;
+            gap: 14px;
+            margin-top: 24px;
+        }
+
+        .card {
+            background: var(--card);
+            padding: 18px;
+            border-radius: 12px;
+            min-width: 160px;
+            backdrop-filter: blur(6px);
+            box-shadow: 0 6px 30px rgba(1,20,20,0.35);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 40px rgba(1,20,20,0.5);
+        }
+
+        .card h4 {
+            margin: 6px 0 0;
+            font-size: 16px;
+        }
+
+        .card p {
+            margin: 6px 0 0;
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        /* content sections */
+        main {
+            margin-top: 28px;
+        }
+
+        section {
+            padding: 48px 0;
+        }
+
+        .why {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .why .panel {
+            flex: 1;
+            padding: 28px;
+            background: var(--glass);
+            border-radius: 16px;
+        }
+
+        .projects {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 18px;
+        }
+
+        /* Tabs Section */
+        .tabs-section {
+            margin-top: 40px;
+        }
+
+        .tabs-header {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .tab-button {
+            padding: 12px 24px;
+            background: transparent;
+            border: none;
+            color: var(--muted);
+            font-weight: 600;
+            cursor: pointer;
+            border-radius: var(--radius) var(--radius) 0 0;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .tab-button.active {
+            color: var(--accent);
+            background: rgba(255,255,255,0.05);
+        }
+
+        .tab-button.active::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--accent);
+            border-radius: 3px 3px 0 0;
+        }
+
+        .tab-content {
+            display: none;
+            padding: 20px;
+            background: var(--glass);
+            border-radius: var(--radius);
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .service-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .service-option {
+            background: var(--card);
+            padding: 15px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            border: 2px solid transparent;
+        }
+
+        .service-option:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        }
+
+        .service-option.selected {
+            border-color: var(--accent);
+            background: rgba(0,196,167,0.1);
+        }
+
+        .plan-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+        .plan-option {
+            background: var(--card);
+            padding: 20px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .plan-option:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+
+        .plan-option.selected {
+            border-color: var(--accent);
+            background: rgba(0,196,167,0.1);
+        }
+
+        .plan-option h4 {
+            margin-top: 0;
+            color: var(--accent);
+        }
+
+        .plan-option .price {
+            font-size: 22px;
+            font-weight: 700;
+            margin: 10px 0;
+        }
+
+        .plan-option .features {
+            list-style: none;
+            padding: 0;
+            margin: 15px 0 0;
+        }
+
+        .plan-option .features li {
+            padding: 5px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .plan-option .features li:last-child {
+            border-bottom: none;
+        }
+
+        /* contact/footer */
+        footer {
+            margin-top: 30px;
+            padding: 22px;
+            border-radius: 12px;
+            background: linear-gradient(180deg, rgba(2,20,20,0.18), rgba(2,20,20,0.06));
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .contact {
+            display: flex;
+            gap: 14px;
+            align-items: center;
+        }
+
+        .contact a {
+            color: var(--muted);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .contact a:hover {
+            color: var(--accent);
+        }
+
+        /* small screens */
+        @media (max-width: 720px) {
+            .wrap {
+                padding: 18px;
+            }
+
+            h1 {
+                font-size: 34px;
+            }
+
+            .hero {
+                height: 70vh;
+                min-height: 520px;
+            }
+
+            .services-row {
+                flex-direction: column;
+            }
+
+            .tabs-header {
+                flex-direction: column;
+            }
+
+            .tab-button {
+                border-radius: var(--radius);
+                margin-bottom: 5px;
+            }
+
+            .tab-button.active::after {
+                display: none;
+            }
+
+            footer {
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .why {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="wrap">
+        <div class="hero">
+            <div class="layer bg-layer bg-1" data-speed="0.05"></div>
+            <div class="layer bg-layer bg-2" data-speed="0.1"></div>
+            <div class="layer bg-layer bg-3" data-speed="0.15"></div>
+
+            <div class="hero-inner">
+                <div class="logo">EPECTRICAL</div>
+                <h1>Smart Electrical • Plumbing • Civil Solutions</h1>
+                <div class="sub">Service in Kochi | Book your Expert Now</div>
+                <div class="cta">
+                    <button class="btn" onclick="scrollToSection('tabs-section')">Book a Service</button>
+                    <button class="btn ghost" onclick="scrollToSection('tabs-section')">Get Free Quote</button>
+                </div>
+                <div class="services-row" aria-hidden="false">
+                    <div class="card">
+                        <div style="font-size:22px">⚡</div>
+                        <h4>Electrical Works</h4>
+                        <p>Wiring · Repairs · Upgrades</p>
+                    </div>
+                    <div class="card">
+                        <div style="font-size:22px">🚰</div>
+                        <h4>Plumbing</h4>
+                        <p>Leak Fix · Bathroom · Water Lines</p>
+                    </div>
+                    <div class="card">
+                        <div style="font-size:22px">🏗️</div>
+                        <h4>Civil Works</h4>
+                        <p>Renovation · Painting · Tiles</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3D floating decorative shape -->
+            <svg style="position:absolute;right:30px;bottom:10px;z-index:5;opacity:0.9" width="220" height="220" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <linearGradient id="g" x1="0" x2="1">
+                        <stop offset="0" stop-color="#00d0a0"/>
+                        <stop offset="1" stop-color="#008fb0"/>
+                    </linearGradient>
+                </defs>
+                <rect x="0" y="0" width="200" height="200" rx="26" fill="url(#g)" opacity="0.12"/>
+                <g transform="translate(20,28) scale(0.9)" fill="white" opacity="0.12">
+                    <rect x="0" y="0" width="140" height="100" rx="8"/>
+                </g>
+            </svg>
+        </div>
+
+        <main>
+            <section class="why">
+                <div class="panel">
+                    <h2>Why Choose Epectrical?</h2>
+                    <ul>
+                        <li>10+ Years Experience</li>
+                        <li>Certified Electricians & Plumbers</li>
+                        <li>Fast Service Anywhere in Kochi</li>
+                        <li>Transparent Pricing with No Hidden Costs</li>
+                        <li>24/7 Emergency Service Available</li>
+                    </ul>
+                </div>
+                <div style="width:360px">
+                    <h3>Recent Projects</h3>
+                    <div class="projects">
+                        <div style="background:var(--card);padding:12px;border-radius:10px">Residential Wiring — Kochi</div>
+                        <div style="background:var(--card);padding:12px;border-radius:10px">Bathroom Renovation</div>
+                        <div style="background:var(--card);padding:12px;border-radius:10px">Office Fit-out</div>
+                        <div style="background:var(--card);padding:12px;border-radius:10px">Plumbing Overhaul</div>
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <h2>From homes to offices — powered by Epectrical</h2>
+                <p style="color:var(--muted)">We provide transparent estimates, digital service reports and fast response across Kochi.</p>
+            </section>
+
+            <section class="tabs-section" id="tabs-section">
+                <h2>Our Services & Plans</h2>
+                <p style="color:var(--muted); margin-bottom: 30px;">Choose between immediate service booking or planning for future projects</p>
+                
+                <div class="tabs-header">
+                    <button class="tab-button active" data-tab="book-service">Book a Service</button>
+                    <button class="tab-button" data-tab="make-plan">Make a Plan</button>
+                </div>
+
+                <div class="tab-content active" id="book-service">
+                    <h3>Select Your Service Type</h3>
+                    <div class="service-options">
+                        <div class="service-option" data-service="electrical">
+                            <div style="font-size:32px; margin-bottom: 10px;">⚡</div>
+                            <h4>Electrical</h4>
+                            <p>Wiring, repairs, installations</p>
+                        </div>
+                        <div class="service-option" data-service="plumbing">
+                            <div style="font-size:32px; margin-bottom: 10px;">🚰</div>
+                            <h4>Plumbing</h4>
+                            <p>Leaks, installations, repairs</p>
+                        </div>
+                        <div class="service-option" data-service="civil">
+                            <div style="font-size:32px; margin-bottom: 10px;">🏗️</div>
+                            <h4>Civil Works</h4>
+                            <p>Renovation, construction</p>
+                        </div>
+                        <div class="service-option" data-service="emergency">
+                            <div style="font-size:32px; margin-bottom: 10px;">🚨</div>
+                            <h4>Emergency</h4>
+                            <p>Urgent repairs, 24/7 service</p>
+                        </div>
+                    </div>
+
+                    <form id="service-form" style="display: flex; flex-direction: column; gap: 15px;">
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                            <input id="name" placeholder="Your name" required style="padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.06);background:transparent;color:var(--muted)" />
+                            <input id="phone" placeholder="Phone number" required style="padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.06);background:transparent;color:var(--muted)" />
+                        </div>
+                        <input id="address" placeholder="Service address" required style="padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.06);background:transparent;color:var(--muted)" />
+                        <textarea id="service-details" rows="4" placeholder="Describe the issue or service needed" style="padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.06);background:transparent;color:var(--muted)"></textarea>
+                        <div style="display: flex; gap: 10px; align-items: center;">
+                            <input type="checkbox" id="urgent" style="margin: 0;">
+                            <label for="urgent">This is an urgent matter</label>
+                        </div>
+                        <button class="btn" type="submit">Request Service</button>
+                    </form>
+                </div>
+
+                <div class="tab-content" id="make-plan">
+                    <h3>Choose Your Planning Option</h3>
+                    <p style="color: var(--muted); margin-bottom: 20px;">Select a plan that fits your project needs</p>
+                    
+                    <div class="plan-options">
+                        <div class="plan-option" data-plan="basic">
+                            <h4>Basic Consultation</h4>
+                            <div class="price">₹999</div>
+                            <p>Initial assessment and basic planning</p>
+                            <ul class="features">
+                                <li>On-site visit & assessment</li>
+                                <li>Basic project outline</li>
+                                <li>Material recommendations</li>
+                                <li>Timeline estimation</li>
+                            </ul>
+                        </div>
+                        <div class="plan-option" data-plan="standard">
+                            <h4>Standard Planning</h4>
+                            <div class="price">₹2,499</div>
+                            <p>Comprehensive project planning</p>
+                            <ul class="features">
+                                <li>Detailed project blueprint</li>
+                                <li>Material & cost breakdown</li>
+                                <li>Timeline with milestones</li>
+                                <li>2 revision rounds</li>
+                                <li>Permit guidance</li>
+                            </ul>
+                        </div>
+                        <div class="plan-option" data-plan="premium">
+                            <h4>Premium Planning</h4>
+                            <div class="price">₹4,999</div>
+                            <p>End-to-end project management</p>
+                            <ul class="features">
+                                <li>Complete project design</li>
+                                <li>Material sourcing assistance</li>
+                                <li>Contractor coordination</li>
+                                <li>Unlimited revisions</li>
+                                <li>Progress monitoring</li>
+                                <li>Post-project support</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <form id="plan-form" style="display: flex; flex-direction: column; gap: 15px; margin-top: 30px;">
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                            <input id="plan-name" placeholder="Your name" required style="padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.06);background:transparent;color:var(--muted)" />
+                            <input id="plan-phone" placeholder="Phone number" required style="padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.06);background:transparent;color:var(--muted)" />
+                        </div>
+                        <input id="plan-address" placeholder="Project address" required style="padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.06);background:transparent;color:var(--muted)" />
+                        <textarea id="project-details" rows="4" placeholder="Tell us about your project vision, requirements, and budget" style="padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.06);background:transparent;color:var(--muted)"></textarea>
+                        <div style="display: flex; gap: 10px; align-items: center;">
+                            <input type="checkbox" id="newsletter" style="margin: 0;" checked>
+                            <label for="newsletter">Send me project tips and updates</label>
+                        </div>
+                        <button class="btn" type="submit">Start Planning</button>
+                    </form>
+                </div>
+            </section>
+
+            <section id="contact" style="padding-top:40px">
+                <div style="display:flex;gap:18px;align-items:center;flex-wrap:wrap">
+                    <div style="flex:1;min-width:260px;background:var(--glass);padding:22px;border-radius:12px">
+                        <h3>Let's Fix It Together!</h3>
+                        <p style="color:var(--muted);margin-top:8px">Call or WhatsApp to request service, or send a message on Instagram.</p>
+                        <p style="margin-top:14px;font-weight:700">📞 <a href="tel:+918921677351" style="color:var(--muted);text-decoration:none">+91 89216 77351</a></p>
+                        <p style="margin-top:6px;font-weight:700">💬 <a href="https://wa.me/message/AD6ACJV5LMQMA1" target="_blank" rel="noopener" style="color:var(--muted);text-decoration:none">WhatsApp</a></p>
+                        <p style="margin-top:6px;font-weight:700">📷 <a href="https://www.instagram.com/epectrical" target="_blank" rel="noopener" style="color:var(--muted);text-decoration:none">@epectrical</a></p>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <div class="contact">
+                <span>📞 <a href="tel:+918921677351">+91 89216 77351</a></span>
+                <span>•</span>
+                <a href="https://wa.me/message/AD6ACJV5LMQMA1" target="_blank" rel="noopener">WhatsApp</a>
+                <span>•</span>
+                <a href="https://www.instagram.com/epectrical" target="_blank" rel="noopener">Instagram</a>
+            </div>
+            <div style="opacity:0.8">© 2025 Epectrical | Electrical Energy Solutions</div>
+        </footer>
+    </div>
+
+    <script>
+        // Simple parallax effect on scroll
+        (function() {
+            const layers = document.querySelectorAll('.bg-layer');
+            function onScroll() {
+                const scrolled = window.scrollY || window.pageYOffset;
+                layers.forEach(layer => {
+                    const speed = parseFloat(layer.dataset.speed) || 0.05;
+                    layer.style.transform = `translateY(${scrolled * speed}px)`;
+                });
+            }
+            window.addEventListener('scroll', onScroll, { passive: true });
+            onScroll();
+        })();
+
+        function scrollToSection(sectionId) {
+            document.getElementById(sectionId).scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        // Tab functionality
+        document.querySelectorAll('.tab-button').forEach(button => {
+            button.addEventListener('click', () => {
+                // Remove active class from all buttons and contents
+                document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+                
+                // Add active class to clicked button and corresponding content
+                button.classList.add('active');
+                const tabId = button.getAttribute('data-tab');
+                document.getElementById(tabId).classList.add('active');
+            });
+        });
+
+        // Service selection functionality
+        document.querySelectorAll('.service-option').forEach(option => {
+            option.addEventListener('click', () => {
+                document.querySelectorAll('.service-option').forEach(opt => opt.classList.remove('selected'));
+                option.classList.add('selected');
+            });
+        });
+
+        // Plan selection functionality
+        document.querySelectorAll('.plan-option').forEach(option => {
+            option.addEventListener('click', () => {
+                document.querySelectorAll('.plan-option').forEach(opt => opt.classList.remove('selected'));
+                option.classList.add('selected');
+            });
+        });
+
+        // Form submission handlers
+        document.getElementById('service-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const selectedService = document.querySelector('.service-option.selected');
+            if (!selectedService) {
+                alert('Please select a service type');
+                return;
+            }
+            
+            const name = document.getElementById('name').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+            const address = document.getElementById('address').value.trim();
+            const details = document.getElementById('service-details').value.trim();
+            const urgent = document.getElementById('urgent').checked;
+            
+            if (!name || !phone || !address) {
+                alert('Please fill in all required fields');
+                return;
+            }
+            
+            const serviceType = selectedService.getAttribute('data-service');
+            const text = `New service request: ${serviceType}\nFrom: ${name} (${phone})\nAddress: ${address}\nDetails: ${details}\n${urgent ? 'URGENT SERVICE REQUESTED' : ''}`;
+            
+            // For demo: open WhatsApp chat with prefilled message
+            const wa = 'https://wa.me/message/AD6ACJV5LMQMA1?text=' + encodeURIComponent(text);
+            window.open(wa, '_blank');
+            
+            // Reset form
+            this.reset();
+            document.querySelectorAll('.service-option').forEach(opt => opt.classList.remove('selected'));
+        });
+
+        document.getElementById('plan-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const selectedPlan = document.querySelector('.plan-option.selected');
+            if (!selectedPlan) {
+                alert('Please select a planning option');
+                return;
+            }
+            
+            const name = document.getElementById('plan-name').value.trim();
+            const phone = document.getElementById('plan-phone').value.trim();
+            const address = document.getElementById('plan-address').value.trim();
+            const details = document.getElementById('project-details').value.trim();
+            
+            if (!name || !phone || !address) {
+                alert('Please fill in all required fields');
+                return;
+            }
+            
+            const planType = selectedPlan.getAttribute('data-plan');
+            const text = `New planning request: ${planType} plan\nFrom: ${name} (${phone})\nAddress: ${address}\nProject Details: ${details}`;
+            
+            // For demo: open WhatsApp chat with prefilled message
+            const wa = 'https://wa.me/message/AD6ACJV5LMQMA1?text=' + encodeURIComponent(text);
+            window.open(wa, '_blank');
+            
+            // Reset form
+            this.reset();
+            document.querySelectorAll('.plan-option').forEach(opt => opt.classList.remove('selected'));
+        });
+    </script>
+</body>
+</html>
 # business-website-
